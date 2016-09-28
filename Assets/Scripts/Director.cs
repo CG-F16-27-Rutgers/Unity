@@ -27,7 +27,7 @@ public class Director : MonoBehaviour {
 				if (objectHit.tag.ToString().Equals("Agent"))
 				{
 					print("Agent selected");
-					objectHit.gameObject.GetComponent<testitem> ().isNowSelected ();
+					objectHit.gameObject.GetComponent<AgentController> ().isNowSelected ();
 					agents.Add(objectHit.gameObject);
 					Click = true;
 				}
@@ -36,9 +36,9 @@ public class Director : MonoBehaviour {
 					print("Deploying!");
 					foreach (GameObject obj in agents)
 					{
-						obj.GetComponent<testitem>().Goto(hit);
-						obj.GetComponent<testitem>().enabled = true;
-						obj.GetComponent<testitem> ().isNowNotSelected ();
+						obj.GetComponent<AgentController>().Goto(hit);
+						obj.GetComponent<AgentController>().enabled = true;
+						obj.GetComponent<AgentController>().isNowNotSelected ();
 					}
 					agents.Clear();
 					Click = false;

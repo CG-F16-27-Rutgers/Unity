@@ -4,7 +4,7 @@ using System.Collections;
 public class opendoor : MonoBehaviour
 {
     float smooth = 2.0f;
-    float DoorOpenAngle = -90.0f;
+    public float DoorOpenAngle;
     float DoorCloseAngle = 0.0f;
     bool open;
     bool enter;
@@ -39,17 +39,11 @@ public class opendoor : MonoBehaviour
             transform.localRotation = Quaternion.Slerp(transform.localRotation, target, Time.deltaTime * smooth);
         }
 
-        //if (open == false)
-        //{
-        //    print("if(!open)");
-        //    var target1 = Quaternion.Euler(0, DoorCloseAngle, 0);
-        //    transform.localRotation = Quaternion.Slerp(transform.localRotation, target1, Time.deltaTime * smooth);
-        //}
-
         if (enter == true)
         {
             print("if(enter)");
             open = !open;
+            print(open);
         }
     }
 }

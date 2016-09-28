@@ -13,7 +13,7 @@ public class opendoor : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Agent")
         {
             enter = true;
             print("open");
@@ -23,7 +23,7 @@ public class opendoor : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Agent")
         {
             enter = false;
             print("close");

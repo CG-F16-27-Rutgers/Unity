@@ -34,6 +34,7 @@ public class ObstacleController : MonoBehaviour {
         {
             print("123");
             select = true;
+            /*
             rb = this.gameObject.GetComponent<Rigidbody>();
             float moveHorizontal = 0;
             float moveVertical = 0;
@@ -55,6 +56,10 @@ public class ObstacleController : MonoBehaviour {
             }
             Vector3 move = new Vector3(moveHorizontal * speed, 0.0f, moveVertical * speed);
             rb.AddForce(move);
+            */
+            Vector3 input = new Vector3(Input.GetAxis("Horizontal1"), 0.0f, Input.GetAxis("Vertical1"));
+            input *= speed;
+            this.gameObject.transform.position += input * Time.deltaTime;
         }
 	}
 }

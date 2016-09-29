@@ -3,15 +3,19 @@ using System.Collections;
 
 public class Director : MonoBehaviour {
 	public Camera camera;
-	bool Click;
-	NavMeshAgent agent;
+	bool Click1;
+    bool Click2;
+    NavMeshAgent agent;
 	public Transform objectHit;
 	public ArrayList agents;
+    public ArrayList nazguls;
 
-	void Start()
+    void Start()
 	{
-		Click = false;
-		agents = new ArrayList();
+		Click1 = false;
+        Click2 = false;
+        agents = new ArrayList();
+        nazguls = new ArrayList();
 
 	}
 	void Update()
@@ -29,9 +33,9 @@ public class Director : MonoBehaviour {
 					print("Agent selected");
 					objectHit.gameObject.GetComponent<AgentController> ().isNowSelected ();
 					agents.Add(objectHit.gameObject);
-					Click = true;
+					Click1 = true;
 				}
-				else if (Click == true)
+				else if (Click1 == true)
 				{
 					print("Deploying!");
 					foreach (GameObject obj in agents)
@@ -41,10 +45,43 @@ public class Director : MonoBehaviour {
 						obj.GetComponent<AgentController>().isNowNotSelected ();
 					}
 					agents.Clear();
-					Click = false;
+					Click1 = false;
 				}
-			}
-		}
-	}
+                //selecting nazguls
+                if (objectHit.tag.ToString().Equals("Nazgul"))
+                {
+                    print("Nazgul selected");
+                    objectHit.gameObject.GetComponent<AgentController>().isNowSelected();
+                    nazguls.Add(objectHit.gameObject);
+                    Click2 = true;
+                }
+                else if (Click2 == true)
+                {
+                    print("Deploying!");
+                    foreach (GameObject obj in nazguls)
+                    {
+                        obj.GetComponent<AgentController>().Goto(hit);
+                        obj.GetComponent<AgentController>().enabled = true;
+                        obj.GetComponent<AgentController>().isNowNotSelected();
+                    }
+                    nazguls.Clear();
+                    Click2 = false;
+                }
+            }
+            if (Click1 == true && Input.GetMouseButtonDown(1))
+            {
+                print("Deploying!");
+                foreach (GameObject obj in agents)
+                {
+                    obj.GetComponent<AgentController>().Goto(hit);
+                    obj.GetComponent<AgentController>().enabled = true;
+                    obj.GetComponent<AgentController>().isNowNotSelected();
+                }
+                agents.Clear();
+                Click1 = false;
+            }
+
+        }
+    }
 
 }

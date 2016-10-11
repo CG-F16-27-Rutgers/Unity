@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: c324336426abd6f41be979bfd691c6cb
+guid: b9025d6cb0ead124aa1436a04c54d6c3
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
@@ -161,7 +161,7 @@ ModelImporter:
     400152: Spine
     400154: TongueBack
     400156: TongueTip
-    7400000: JogBackwardTurnRight_NtrlMedium
+    7400000: RapidStrafe_90transitionLeftRightFaceFwd
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -187,10 +187,10 @@ ModelImporter:
     extraExposedTransformPaths: []
     clipAnimations:
     - serializedVersion: 16
-      name: JogBackwardTurnRight_NtrlMedium
-      takeName: _22_a_U1_M_P_JogBackwardTurnRight_NtrlMedium__Fb_Dia2m_No_0_PJ_0
-      firstFrame: 57
-      lastFrame: 118
+      name: RapidStrafe_90transitionLeftRightFaceFwd
+      takeName: _60b_a_U1_M_P_RapidStrafe_90transitionLeftRightFaceFwd__Fb_p90_No_0_5_6
+      firstFrame: 273
+      lastFrame: 350
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -199,7 +199,7 @@ ModelImporter:
       hasAdditiveReferencePose: 0
       loopTime: 0
       loopBlend: 0
-      loopBlendOrientation: 1
+      loopBlendOrientation: 0
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0
       keepOriginalOrientation: 0

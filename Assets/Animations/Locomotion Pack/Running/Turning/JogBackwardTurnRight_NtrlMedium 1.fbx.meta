@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: c324336426abd6f41be979bfd691c6cb
+guid: bad35e02bd4e9f0429f5d1789c332687
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
@@ -206,7 +206,7 @@ ModelImporter:
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 0
       heightFromFeet: 0
-      mirror: 0
+      mirror: 1
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events: []

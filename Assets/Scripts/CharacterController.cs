@@ -10,8 +10,8 @@ public class CharacterController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        float zmove = Input.GetAxis("Vertical");
-        float xmove = Input.GetAxis("Horizontal");
+        float zmove = Input.GetAxis("Vertical1");
+        float xmove = Input.GetAxis("Horizontal1");
 		anim.SetFloat("zmove", zmove);
 		anim.SetFloat("xmove", xmove);
         
@@ -23,6 +23,7 @@ public class CharacterController : MonoBehaviour {
         {
             anim.SetBool("run", false);
         }
+
         if (Input.GetKey(KeyCode.LeftControl) && xmove!=0)
         {
             anim.SetBool("strafe", true);
@@ -35,6 +36,7 @@ public class CharacterController : MonoBehaviour {
             }
             anim.SetBool("strafe", false);
         }
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
             anim.SetTrigger("jump");

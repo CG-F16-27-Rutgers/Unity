@@ -6,7 +6,6 @@ public class opendoor : MonoBehaviour
     float smooth = 1.0f;
     public float DoorOpenAngle;
     float DoorCloseAngle = 0.0f;
-    bool open;
     bool enter;
 
 
@@ -45,11 +44,5 @@ public class opendoor : MonoBehaviour
             transform.localRotation = Quaternion.Slerp(transform.localRotation, target, Time.deltaTime * smooth);
         }
 
-        //if (enter == true)
-        //{
-        //    print("if(enter)");
-        //    open = !open;
-        //    print(open);
-        //}
     }
 }

@@ -5,8 +5,8 @@ public class CharacterController : MonoBehaviour {
 	Animator anim;
 	NavMeshAgent agent;
 	Vector2 smoothDeltaPosition = Vector2.zero;
-	Vector2 velocity = Vector2.zero;
-
+	public Vector2 velocity = Vector2.zero;
+    
 	// Use this for initialization
 	void Start () {
 		anim = GetComponent<Animator>();
@@ -33,6 +33,8 @@ public class CharacterController : MonoBehaviour {
 			velocity = smoothDeltaPosition / Time.deltaTime;
 
 		bool shouldMove = velocity.magnitude > 0.5f && agent.remainingDistance > agent.radius;
+
+
 
 		// Update animation parameters
 		anim.SetBool("move", shouldMove);

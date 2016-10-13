@@ -43,5 +43,4 @@ public class AgentController : MonoBehaviour {
 		agent.SetDestination (hit.point);
 	}
 
-
 }

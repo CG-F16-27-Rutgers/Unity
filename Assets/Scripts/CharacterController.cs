@@ -41,9 +41,19 @@ public class CharacterController : MonoBehaviour {
 		anim.SetFloat("xmove", velocity.x);
 		anim.SetFloat("zmove", velocity.y);
 
-	}
+        if (agent.isOnOffMeshLink)
+        {
+            agent.Stop();
+            anim.SetBool("move", false);
+            anim.SetTrigger("jump");
+            anim.SetBool("move", true);
+            agent.Resume();
+        }
 
-	void OnAnimatorMove()
+    }
+
+
+    void OnAnimatorMove()
 	{
 		// Update position to agent position
 		transform.position = agent.nextPosition;

@@ -34,10 +34,12 @@ public class walkrun : MonoBehaviour {
         if (walk == true)
         {
             StatusText.text = "Status:walk";
+            agent.speed = 3.5f;
         }
         else
         {
             StatusText.text = "Status:run";
+            agent.speed = 5;
             if(shouldMove==false)
                 anim.SetBool("run", false);
         }

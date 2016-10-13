@@ -2,45 +2,48 @@
 using System.Collections;
 
 public class CharacterController : MonoBehaviour {
-    Animator anim;
+	Animator anim;
+	NavMeshAgent agent;
+	Vector2 smoothDeltaPosition = Vector2.zero;
+	Vector2 velocity = Vector2.zero;
+
 	// Use this for initialization
 	void Start () {
-        anim = GetComponent<Animator>();
+		anim = GetComponent<Animator>();
+		agent = GetComponent<NavMeshAgent>(); 
+		// Don’t update position automatically
+		agent.updatePosition = false;
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
-        float zmove = Input.GetAxis("Vertical1");
-        float xmove = Input.GetAxis("Horizontal1");
-		anim.SetFloat("zmove", zmove);
-		anim.SetFloat("xmove", xmove);
-        
-		if (Input.GetKey(KeyCode.LeftShift))
-        {
-            anim.SetBool("run", true);
-        }
-        else
-        {
-            anim.SetBool("run", false);
-        }
+		Vector3 worldDeltaPosition = agent.nextPosition - transform.position;
 
-        if (Input.GetKey(KeyCode.LeftControl) && xmove!=0)
-        {
-            anim.SetBool("strafe", true);
-        }
-        else
-        {
-            if (zmove == 0 && xmove != 0)
-            {
-                transform.Rotate(new Vector3(0, xmove * 60 * Time.deltaTime));
-            }
-            anim.SetBool("strafe", false);
-        }
+		// Map 'worldDeltaPosition' to local space
+		float dx = Vector3.Dot(transform.right, worldDeltaPosition);
+		float dy = Vector3.Dot(transform.forward, worldDeltaPosition);
+		Vector2 deltaPosition = new Vector2(dx, dy);
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            anim.SetTrigger("jump");
-        }
+		// Low-pass filter the deltaMove
+		float smooth = Mathf.Min(1.0f, Time.deltaTime / 0.15f);
+		smoothDeltaPosition = Vector2.Lerp(smoothDeltaPosition, deltaPosition, smooth);
 
-    }
+		// Update velocity if time advances
+		if (Time.deltaTime > 1e-5f)
+			velocity = smoothDeltaPosition / Time.deltaTime;
+
+		bool shouldMove = velocity.magnitude > 0.5f && agent.remainingDistance > agent.radius;
+
+		// Update animation parameters
+		anim.SetBool("move", shouldMove);
+		anim.SetFloat("xmove", velocity.x);
+		anim.SetFloat("zmove", velocity.y);
+
+	}
+
+	void OnAnimatorMove()
+	{
+		// Update position to agent position
+		transform.position = agent.nextPosition;
+	}
 }

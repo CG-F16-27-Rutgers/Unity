@@ -4,10 +4,10 @@ using System.Collections;
 public class CharacterController : MonoBehaviour {
 	Animator anim;
 	NavMeshAgent agent;
+	bool traversingLink = false;
+	OffMeshLinkData currLink;
 	Vector2 smoothDeltaPosition = Vector2.zero;
 	public Vector2 velocity = Vector2.zero;
-    bool traversingLink = false;
-    OffMeshLinkData currLink;
 
     // Use this for initialization
     void Start () {
@@ -36,40 +36,13 @@ public class CharacterController : MonoBehaviour {
             velocity = smoothDeltaPosition / Time.deltaTime;
 
         bool shouldMove = velocity.magnitude > 0.5f && agent.remainingDistance > agent.radius;
-
-
-
         // Update animation parameters
         anim.SetBool("move", shouldMove);
         anim.SetFloat("xmove", velocity.x);
         anim.SetFloat("zmove", velocity.y);
 
-        if (agent.isOnOffMeshLink)
-        {
-            if (!traversingLink)
-            {
-                agent.Stop();
-                anim.Play("Walk Jump");
-                //anim.CrossFade("Walk Jump", 0.1f, PlayMode.StopAll);
-                currLink = agent.currentOffMeshLinkData;
-                traversingLink = true;
-            }
-            var tlerp = GetComponent<animation>["Walk Jump"].normalizedTime;
-            var newPosition = Vector3.Lerp(currLink.startPos, currLink.endPos, smooth);
-            newPosition.y += 2f * Mathf.Sin(Mathf.PI * smooth);
-            transform.position = newPosition;
-
-            if (anim.GetCurrentAnimatorStateInfo(0).IsName("Walk Jump"))
-            {
-                Debug.Log("should be at other side of navMesh");
-                transform.position = currLink.endPos;
-                traversingLink = false;
-                agent.CompleteOffMeshLink();
-                agent.Resume();
-            }
-
-        }
     }
+
 
 
     void OnAnimatorMove()

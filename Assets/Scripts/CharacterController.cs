@@ -4,6 +4,8 @@ using System.Collections;
 public class CharacterController : MonoBehaviour {
 	Animator anim;
 	NavMeshAgent agent;
+	bool traversingLink = false;
+	OffMeshLinkData currLink;
 	Vector2 smoothDeltaPosition = Vector2.zero;
 	public Vector2 velocity = Vector2.zero;
     
@@ -36,21 +38,36 @@ public class CharacterController : MonoBehaviour {
 
 
 
-		// Update animation parameters
-		anim.SetBool("move", shouldMove);
-		anim.SetFloat("xmove", velocity.x);
-		anim.SetFloat("zmove", velocity.y);
 
-        if (agent.isOnOffMeshLink)
-        {
-            agent.Stop();
-            anim.SetBool("move", false);
-            anim.SetTrigger("jump");
-            anim.SetBool("move", true);
-            agent.Resume();
-        }
+		if (agent.isOnOffMeshLink) {
+			if (!traversingLink) {
+				agent.Stop ();
+				anim.SetTrigger ("jump");
+				//anim.Play ("Walk Jump");
+				currLink = agent.currentOffMeshLinkData;
+				traversingLink = true;
+			}
+			var tlerp = anim.GetCurrentAnimatorStateInfo (0).normalizedTime;
+			var newPosition = Vector3.Lerp (currLink.startPos, currLink.endPos, tlerp);
+			newPosition.y += 2f * Mathf.Sin (Mathf.PI * tlerp);
+			transform.position = newPosition;
+
+			if (anim.GetCurrentAnimatorStateInfo (0).IsTag ("jump")) {
+				anim.ResetTrigger ("jump");
+				transform.position = currLink.endPos;
+				traversingLink = false;
+				agent.CompleteOffMeshLink ();
+				agent.Resume ();
+			}
+		} else {
+			anim.SetBool("move", shouldMove);
+			anim.SetFloat("xmove", velocity.x);
+			anim.SetFloat("zmove", velocity.y);
+		}
+		// Update animation parameters
 
     }
+
 
 
     void OnAnimatorMove()
